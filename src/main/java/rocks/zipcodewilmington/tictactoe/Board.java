@@ -4,20 +4,53 @@ package rocks.zipcodewilmington.tictactoe;
  * @author leon on 6/22/18.
  */
 public class Board {
+
+    Character[][] board;
+
     public Board(Character[][] matrix) {
+        this.board = matrix;
     }
 
-    public Boolean isInFavorOfX(char[][] array) { //Branch
+    public Boolean isInFavorOfX() { //Branch
 
-        int xhAdvant =0;
-        int xvAdvant =0;
-        int xcAdvant =0;
-        int ohAdvant =0;
-        int ovAdvant =0;
-        int ocAdvant =0;
-        int xAdvent;
-        int oAdvent;
+        String test = getWinner();
 
+        if(test.equals("xAdvant") || test.equals("X")){
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean isInFavorOfO() {
+        String test = getWinner();
+
+        if(test.equals("oAdvant") || test.equals("O")){
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public Boolean isTie() {
+
+        String test = getWinner();
+
+        if(test.equals("")){
+            return true;
+        }
+
+        return false;
+    }
+
+    public String getWinner() {
+
+        int xAdvant = 0;
+        int oAdvant = 0;
+        String line = "";
+        String output = "";
+        String result = "";
 
         String[] horizontal = new String[3];
         String[] vertical = new String[3];
@@ -25,55 +58,68 @@ public class Board {
 
         for (int i = 0; i < 3; i++){        //Horizontal Print
             for(int j = 0; j < 3; j++){
-            horizontal[i] += String.valueOf(array[i][j]);
+                line += String.valueOf(board[i][j]);
             }
-            if (horizontal[i].equals("x x") || horizontal[i].equals("xx ")){
-                xhAdvant++;
-            } else if (horizontal[i].equals("o o") || horizontal[i].equals("oo ")){
-                ohAdvant++;
+            horizontal[i] = line;
+            System.out.println(horizontal[i]);
+            line ="";
+            if (horizontal[i].equals("X X") || horizontal[i].equals("XX ")){
+                xAdvant++;
+            } else if (horizontal[i].equals("O O") || horizontal[i].equals("OO ")){
+                oAdvant++;
+            }
+            if (horizontal[i].equals("XXX")){
+                return output = "X";
+            } else if (horizontal[i].equals("OOO")){
+                return output = "O";
             }
         }
-
 
         for (int i = 0; i < 3; i++){        //Vertical Print
             for(int j = 0; j < 3; j++){
-                vertical[i] += String.valueOf(array[j][i]);
+                line += String.valueOf(board[j][i]);
             }
+            vertical[i] = line;
+            line = "";
             System.out.println(vertical[i]);
-            if (vertical[i].equals("x x") || vertical[i].equals("xx ")){
-                xvAdvant++;
-            } else if (vertical[i].equals("o o") || vertical[i].equals("oo ")) {
-                ovAdvant++;
+            if (vertical[i].equals("X X") || vertical[i].equals("XX ")){
+                xAdvant++;
+            } else if (vertical[i].equals("O O") || vertical[i].equals("OO ")) {
+                oAdvant++;
+            }
+            if (vertical[i].equals("XXX")){
+                return output = "X";
+            } else if (vertical[i].equals("OOO")){
+                return output = "O";
             }
         }
 
-        cross[0] += String.valueOf(array[0][0]) + String.valueOf(array[1][1]) + String.valueOf(array[2][2]);
-        cross[1] += String.valueOf(array[0][2]) + String.valueOf(array[1][1]) + String.valueOf(array[2][0]);
+        cross[0] = String.valueOf(board[0][0]) + String.valueOf(board[1][1]) + String.valueOf(board[2][2]);
+        cross[1] = String.valueOf(board[0][2]) + String.valueOf(board[1][1]) + String.valueOf(board[2][0]);
 
         for(int i = 0; i < 2; i++){
-        if(cross[i].equals("x x") || cross[i].equals("xx ")){
-            xcAdvant++;
-        } else if (cross[i].equals("o o") || cross[i].equals("oo ")){
-            ocAdvant++;
+            if(cross[i].equals("X X") || cross[i].equals("XX ")){
+                xAdvant++;
+            } else if (cross[i].equals("O O") || cross[i].equals("OO ")){
+                oAdvant++;
+            }
+            if(cross[i].equals("XXX")){
+                return output = "X";
+            } else if (cross[i].equals("OOO")){
+                return output = "O";
+            }
         }
+
+
+        if (xAdvant > oAdvant){
+            return "xAdvant";
+        } else if (xAdvant < oAdvant){
+            return "oAdvant";
+        } else if (xAdvant == oAdvant){
+            return "";
         }
 
-        xAdvent = xcAdvant + xhAdvant + xvAdvant;
-        oAdvent = ocAdvant + ohAdvant + ovAdvant;
-
-        return xAdvent > oAdvent;
-    }
-
-    public Boolean isInFavorOfO() {
-        return null;
-    }
-
-    public Boolean isTie() {
-        return null;
-    }
-
-    public String getWinner() {
-        return null;
+        return output;
     }
 
 }

@@ -54,7 +54,7 @@ public class PlayerTies1Test {
         Boolean expected = false;
 
         // When
-        Boolean actual = board.isInFavorOfX(board);
+        Boolean actual = board.isInFavorOfX();
 
         // Then
         Assert.assertEquals(expected, actual);
